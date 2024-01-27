@@ -2,7 +2,7 @@ const createError = require("../utils/createError");
 const userService = require("../services/user-service");
 
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 // Register =================================================
 exports.register = async (req, res, next) => {
@@ -46,7 +46,7 @@ exports.register = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    console.log(hashedPassword)
+    console.log(hashedPassword);
 
     await userService.createAdmin(
       first_name,
@@ -64,36 +64,72 @@ exports.register = async (req, res, next) => {
 // Register =================================================
 
 // Login ====================================================
-exports.login = async (req, res, next) => {
-    try {
-        const {username, password} = req.body;
-        if (!username || !password) {
-          return createError(400, "Username And Password Require.")
-        }
-        if (typeof username !== "string" || typeof password !== "string") {
-          return createError(400, "Email or Password is invalid.")
-        }
-
-        const isUserExist = await userService.getUserByUsername(username);
-        if(!isUserExist) {
-          return createError(400, "Email or Password is invalid.")
-        }
-
-        const isPasswordMatch = bcrypt.compare(password, isUserExist.password)
-
-        if(!isPasswordMatch) {
-          return createError(400, "Email or Password is invalid.")
-        }
-
-        const token = jwt.sign({ id: isUserExist.id }, process.env.JWT_SECRET, {
-          expiresIn: process.env.JWT_EXPIRES_IN,
-        })
-
-        res.json({ token })
-    } catch (err) {
-        next(err)
+exports.adminLogin = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return createError(400, "Username And Password Require.");
     }
-  };
+    if (typeof username !== "string" || typeof password !== "string") {
+      return createError(400, "Email or Password is invalid.");
+    }
+
+    const isUserExist = await userService.getUserByUsername("admin", username);
+    if (!isUserExist) {
+      return createError(400, "Email or Password is invalid.");
+    }
+
+    const isPasswordMatch = bcrypt.compare(password, isUserExist.password);
+
+    if (!isPasswordMatch) {
+      return createError(400, "Email or Password is invalid.");
+    }
+
+    const token = jwt.sign({ id: isUserExist.id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    });
+
+    res.json({ token });
+  } catch (err) {
+    next(err);
+  }
+};
+// Login ====================================================
+
+// Login ====================================================
+exports.recorderLogin = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return createError(400, "Username And Password Require.");
+    }
+    if (typeof username !== "string" || typeof password !== "string") {
+      return createError(400, "Email or Password is invalid.");
+    }
+
+    const isUserExist = await userService.getUserByUsername(
+      "recorder",
+      username
+    );
+    if (!isUserExist) {
+      return createError(400, "Email or Password is invalid.");
+    }
+
+    const isPasswordMatch = bcrypt.compare(password, isUserExist.password);
+
+    if (!isPasswordMatch) {
+      return createError(400, "Email or Password is invalid.");
+    }
+
+    const token = jwt.sign({ id: isUserExist.id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    });
+
+    res.json({ token });
+  } catch (err) {
+    next(err);
+  }
+};
 // Login ====================================================
 
 exports.forgetPassword = (req, res, next) => {

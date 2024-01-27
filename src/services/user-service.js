@@ -1,23 +1,23 @@
 const prisma = require("../config/prisma");
 
-exports.getUserById = (id) => {
-  return prisma.admin.findFirst({
+exports.getUserById = (role,id) => {
+  return prisma[role].findFirst({
     where: {
       id,
     },
   });
 };
 
-exports.getUserByEmail = (email) => {
-  return prisma.admin.findFirst({
+exports.getUserByEmail = (role,email) => {
+  return prisma[role].findFirst({
     where: {
       email,
     }
   })
 }
 
-exports.getUserByUsername = (username) => {
-  return prisma.admin.findFirst({
+exports.getUserByUsername = (role,username) => {
+  return prisma[role].findFirst({
     where: {
       username,
     }

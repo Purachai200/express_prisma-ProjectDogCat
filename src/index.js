@@ -5,6 +5,13 @@ const errorHandler = require("./middlewares/error");
 const notFoundHandler = require("./middlewares/notFound");
 
 const authRoute = require("./routes/auth-route");
+const adminRoute = require("./routes/admin-route");
+const recorderRoute = require("./routes/recorder-route")
+
+const admin = require("./middlewares/admin");
+const recorder = require("./middlewares/recorder")
+
+const authenticate = require("./middlewares/authenticate");
 
 const app = express();
 
@@ -16,6 +23,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoute);
+app.use("/admin" ,authenticate.authenticateAdmin ,admin ,adminRoute);
+app.use("/recorder" ,authenticate.authenticateRecorder ,recorder ,recorderRoute)
 
 app.use(errorHandler);
 app.use("*", notFoundHandler);

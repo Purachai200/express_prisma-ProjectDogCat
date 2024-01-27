@@ -2,7 +2,7 @@ const createError = require("../utils/createError");
 
 const super_admin = async (req, res, next) => {
   try {
-    if (req.admin.role !== "SUPER_ADMIN") {
+    if (req.username.role !== "SUPER_ADMIN") {
       return createError(403, "Forbidden");
     }
     next();

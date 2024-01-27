@@ -2,7 +2,7 @@ const createError = require("../utils/createError");
 
 const recorder = async (req, res, next) => {
   try {
-    if (req.recorder.role !== "RECORDER") {
+    if (req.username.role !== "RECORDER") {
       return createError(403, "Forbidden");
     }
     next();
