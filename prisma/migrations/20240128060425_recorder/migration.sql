@@ -6,20 +6,24 @@ CREATE TABLE `Admin` (
     `username` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
+    `role` ENUM('RECORDER', 'ADMIN', 'SUPER_ADMIN') NOT NULL DEFAULT 'ADMIN',
 
+    UNIQUE INDEX `Admin_id_key`(`id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Recorder` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(191) NOT NULL,
     `first_name` VARCHAR(191) NOT NULL,
     `last_name` VARCHAR(191) NOT NULL,
     `username` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `subdistrict_id` INTEGER NOT NULL,
+    `role` ENUM('RECORDER', 'ADMIN', 'SUPER_ADMIN') NOT NULL DEFAULT 'RECORDER',
 
+    UNIQUE INDEX `Recorder_id_key`(`id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -43,7 +47,7 @@ CREATE TABLE `Address` (
     `moo` VARCHAR(191) NOT NULL,
     `soi` VARCHAR(191) NULL,
     `street` VARCHAR(191) NULL,
-    `recorder_id` INTEGER NULL,
+    `recorder_id` VARCHAR(191) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -66,7 +70,9 @@ CREATE TABLE `Registered` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `registeredAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `owner_id` INTEGER NOT NULL,
+    `pet_id` INTEGER NULL,
 
+    UNIQUE INDEX `Registered_pet_id_key`(`pet_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -137,6 +143,9 @@ ALTER TABLE `Pet_owner` ADD CONSTRAINT `Pet_owner_address_id_fkey` FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE `Registered` ADD CONSTRAINT `Registered_owner_id_fkey` FOREIGN KEY (`owner_id`) REFERENCES `Pet_owner`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Registered` ADD CONSTRAINT `Registered_pet_id_fkey` FOREIGN KEY (`pet_id`) REFERENCES `Pet`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Pet` ADD CONSTRAINT `Pet_location_id_fkey` FOREIGN KEY (`location_id`) REFERENCES `Location`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

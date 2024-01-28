@@ -1,5 +1,8 @@
 const prisma = require("../config/prisma");
 const createError = require("../utils/createError");
+const userService = require("../services/user-service")
+const bcrypt = require("bcryptjs")
+const { v4: uuidv4 } = require('uuid');
 const {
   createSubdistrictSchema,
   createRecorderSchema,
@@ -29,8 +32,16 @@ exports.createRecorder = async (req, res, next) => {
     if (typeof value !== "object") {
       return createError(400, "Something Went Wrong.");
     }
+    const isUserExist = await userService.getUserByUsername("recorder",value.username);
+    if (isUserExist) {
+      return createError(400, "User already exist.");
+    }
+    const hashedPassword = await bcrypt.hash(value.password, 10);
+    value.password = hashedPassword
+    
     await prisma.recorder.create({
       data: {
+        id: uuidv4(),
         ...value,
         subdistrict: {
           connect: {

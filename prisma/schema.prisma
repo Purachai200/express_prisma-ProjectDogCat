@@ -17,7 +17,7 @@ enum Role {
 }
 
 model Admin {
-  id         Int    @id @default(autoincrement())
+  id         Int    @id @unique @default(autoincrement())
   first_name String
   last_name  String
   username   String
@@ -27,7 +27,7 @@ model Admin {
 }
 
 model Recorder {
-  id            Int         @id @default(autoincrement())
+  id            String      @id @unique @default(dbgenerated())
   first_name    String
   last_name     String
   username      String
@@ -57,7 +57,7 @@ model Address {
   soi          String?
   street       String?
   reocorder    Recorder?  @relation(fields: [recorderId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  recorderId   Int?       @map("recorder_id")
+  recorderId   String?       @map("recorder_id")
   Pet_owner    Pet_owner?
 }
 

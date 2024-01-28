@@ -25,7 +25,7 @@ exports.authenticateAdmin = async (req, res, next) => {
       !payload?.id ||
       typeof payload.id !== "number"
     ) {
-      return createError(400, "Payload not in correct format");
+      return createError(400, "Something Went wrong with Payload.");
     }
 
     const username = await userService.getUserById("admin", payload.id);
@@ -45,7 +45,6 @@ exports.authenticateAdmin = async (req, res, next) => {
 exports.authenticateRecorder = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
-
     if (!authorization) {
       return createError(401, "Unauthorized");
     }
@@ -59,20 +58,14 @@ exports.authenticateRecorder = async (req, res, next) => {
     }
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-
     if (
       typeof payload !== "object" ||
       !payload?.id ||
-      typeof payload.id !== "number"
+      typeof payload.id !== "string"
     ) {
-      return createError(400, "Payload not in correct format");
+      return createError(400, "Something Went wrong with Payload.");
     }
-
-    const username = await userService.getUserById("recorder", payload.id);
-
-    if (!username) {
-      return createError(403, "Recorder Account Invalid.");
-    }
+    const username = await userService.getUserByIdString("recorder", payload.id);
 
     req.username = username;
 

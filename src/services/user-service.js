@@ -8,6 +8,14 @@ exports.getUserById = (role,id) => {
   });
 };
 
+exports.getUserByIdString = (role, id) => {
+  return prisma[role].findMany({
+    where: {
+      id,
+    },
+  });
+};
+
 exports.getUserByEmail = (role,email) => {
   return prisma[role].findFirst({
     where: {

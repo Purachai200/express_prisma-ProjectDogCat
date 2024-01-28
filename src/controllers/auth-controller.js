@@ -1,7 +1,7 @@
 const createError = require("../utils/createError");
 const userService = require("../services/user-service");
 
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 
 // Register =================================================
@@ -27,26 +27,24 @@ exports.register = async (req, res, next) => {
     }
 
     if (!username || !password) {
-      return createError(400, "Email and password are require.");
+      return createError(400, "Username and password are require.");
     }
 
     if (typeof username !== "string" || typeof password !== "string") {
-      return createError(400, "Email or password is invalid.");
+      return createError(400, "Username or password is invalid.");
     }
 
-    const isEmailExist = await userService.getUserByEmail(email);
+    const isEmailExist = await userService.getUserByEmail("admin",email);
     if (isEmailExist) {
       return createError(400, "Email already exist.");
     }
 
-    const isUserExist = await userService.getUserByEmail(username);
+    const isUserExist = await userService.getUserByUsername("admin",username);
     if (isUserExist) {
       return createError(400, "User already exist.");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    console.log(hashedPassword);
 
     await userService.createAdmin(
       first_name,
@@ -63,7 +61,7 @@ exports.register = async (req, res, next) => {
 };
 // Register =================================================
 
-// Login ====================================================
+// AdminLogin ====================================================
 exports.adminLogin = async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -96,7 +94,7 @@ exports.adminLogin = async (req, res, next) => {
 };
 // Login ====================================================
 
-// Login ====================================================
+// RecorderLogin ====================================================
 exports.recorderLogin = async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -107,14 +105,10 @@ exports.recorderLogin = async (req, res, next) => {
       return createError(400, "Email or Password is invalid.");
     }
 
-    const isUserExist = await userService.getUserByUsername(
-      "recorder",
-      username
-    );
+    const isUserExist = await userService.getUserByUsername("recorder", username);
     if (!isUserExist) {
       return createError(400, "Email or Password is invalid.");
     }
-
     const isPasswordMatch = bcrypt.compare(password, isUserExist.password);
 
     if (!isPasswordMatch) {
