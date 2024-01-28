@@ -45,6 +45,7 @@ exports.authenticateAdmin = async (req, res, next) => {
 exports.authenticateRecorder = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
+    
     if (!authorization) {
       return createError(401, "Unauthorized");
     }
@@ -58,6 +59,7 @@ exports.authenticateRecorder = async (req, res, next) => {
     }
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
+    
     if (
       typeof payload !== "object" ||
       !payload?.id ||
@@ -68,7 +70,6 @@ exports.authenticateRecorder = async (req, res, next) => {
     const username = await userService.getUserByIdString("recorder", payload.id);
 
     req.username = username;
-
     next();
   } catch (err) {
     next(err);

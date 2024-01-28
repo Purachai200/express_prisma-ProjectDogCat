@@ -32,6 +32,15 @@ exports.getUserByUsername = (role,username) => {
   })
 }
 
+exports.getIdentityNumber = (identity_number) => {
+  return prisma.pet_owner.findFirst({
+    where: {
+      identity_number,
+    }
+  })
+}
+
+
 exports.createAdmin = (first_name, last_name, username, password, email) => {
   return prisma.admin.create({
     data: {
@@ -42,4 +51,30 @@ exports.createAdmin = (first_name, last_name, username, password, email) => {
       email,
     },
   });
+}
+
+// Get Data
+
+exports.getAdminAllData = (dataTable) => {
+  return prisma[dataTable].findMany();
+}
+
+exports.getAdminOneData = (dataTable, findFrom, refFind, typeRef) => {
+  return prisma[dataTable].findUnique({
+    where: {
+      [findFrom]: typeRef(refFind)
+    }
+  })
+}
+
+exports.getAllData = (dataTable) => {
+  return prisma[dataTable].findMany();
+}
+
+exports.getOneData = (dataTable, findFrom, refFind, typeRef) => {
+  return prisma[dataTable].findUnique({
+    where: {
+      [findFrom]: typeRef(refFind)
+    }
+  })
 }

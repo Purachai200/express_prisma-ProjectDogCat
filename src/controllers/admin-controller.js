@@ -6,6 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 const {
   createSubdistrictSchema,
   createRecorderSchema,
+  updateSubdistrictSchema,
 } = require("../validator/admin-validator");
 
 exports.createSubDistrict = async (req, res, next) => {
@@ -24,6 +25,41 @@ exports.createSubDistrict = async (req, res, next) => {
     next(err);
   }
 };
+exports.updateSubDistrict = async (req, res, next) => {
+  try {
+    const { subdistrictId } = req.params; 
+    const value = await updateSubdistrictSchema.validateAsync(req.body); 
+
+    await prisma.subdistrict.update({
+      where: {
+        id: Number(subdistrictId),
+      },
+      data: {
+        ...value,
+      },
+    });
+
+    res.json("Update Subdistrict Success");
+  } catch (err) {
+    next(err);
+  }
+};
+exports.deleteSubdistrict = async (req, res, next) => {
+  try {
+    const { subdistrictId } = req.params; 
+
+    await prisma.subdistrict.delete({
+      where: {
+        id: Number(subdistrictId),
+      },
+    });
+
+    res.json("Delete Subdistrict Success");
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 exports.createRecorder = async (req, res, next) => {
   try {
@@ -55,3 +91,40 @@ exports.createRecorder = async (req, res, next) => {
     next(err);
   }
 };
+exports.deleteRecorder = async (req, res, next) => {
+  try {
+    const { recorderId } = req.params; 
+
+    await prisma.recorder.delete({
+      where: {
+        id: String(recorderId),
+      },
+    });
+
+    res.json("Delete Recorder Success");
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get Data
+exports.adminGetData = async (req, res, next) => {
+  try {
+    const { data } = req.params;
+    const result = await userService.getAdminAllData(data);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.adminGetDataOne = async (req, res, next) => {
+  try {
+    const { data, find, ref } = req.params;
+    const result = await userService.getAdminAllData(data ,find ,ref ,Number )
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
