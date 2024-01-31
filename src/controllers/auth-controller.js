@@ -109,7 +109,7 @@ exports.recorderLogin = async (req, res, next) => {
     if (!isUserExist) {
       return createError(400, "Email or Password is invalid.");
     }
-    const isPasswordMatch = bcrypt.compare(password, isUserExist.password);
+    const isPasswordMatch = await bcrypt.compare(password, isUserExist.password);
 
     if (!isPasswordMatch) {
       return createError(400, "Email or Password is invalid.");
