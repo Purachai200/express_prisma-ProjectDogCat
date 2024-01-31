@@ -77,7 +77,7 @@ exports.adminLogin = async (req, res, next) => {
       return createError(400, "Email or Password is invalid.");
     }
 
-    const isPasswordMatch = bcrypt.compare(password, isUserExist.password);
+    const isPasswordMatch = await bcrypt.compare(password, isUserExist.password);
 
     if (!isPasswordMatch) {
       return createError(400, "Email or Password is invalid.");
