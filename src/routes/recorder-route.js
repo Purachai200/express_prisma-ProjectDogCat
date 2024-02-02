@@ -1,51 +1,87 @@
 const express = require("express");
 const recorderController = require("../controllers/recorder-controller");
+const authenticate = require("../middlewares/authenticate");
 
+const authRec = authenticate.authenticateRecorder;
 const router = express.Router();
 
-router.post("/create-address", recorderController.createHouseAddress);
+router.post("/create-address", authRec, recorderController.createHouseAddress);
 router.patch(
   "/:addressId/update-address",
+  authRec,
   recorderController.updateHouseAddress
 );
-router.delete("/delete-address/:addressId", recorderController.deleteHouseAddress);
+router.delete(
+  "/delete-address/:addressId",
+  authRec,
+  recorderController.deleteHouseAddress
+);
 
-router.post("/:addressId/create-pet-owner", recorderController.createPetOwner);
-router.patch("/:petOwnerId/update-petOwner", recorderController.updatePetOwner);
-router.delete("/delete-petOwner/:petOwnerId", recorderController.deletePetOwner);
+router.post(
+  "/:addressId/create-pet-owner",
+  authRec,
+  recorderController.createPetOwner
+);
+router.patch(
+  "/:petOwnerId/update-petOwner",
+  authRec,
+  recorderController.updatePetOwner
+);
+router.delete(
+  "/delete-petOwner/:petOwnerId",
+  authRec,
+  recorderController.deletePetOwner
+);
 
-router.post("/:petOwnerId/create-pet", recorderController.createPet);
-router.patch("/:petId/update-pet", recorderController.updatePet);
-router.delete("/delete/:petId", recorderController.deletePet);
+router.post("/:petOwnerId/create-pet", authRec, recorderController.createPet);
+router.patch("/:petId/update-pet", authRec, recorderController.updatePet);
+router.delete("/delete/:petId", authRec, recorderController.deletePet);
 
-router.post("/create-nature", recorderController.createNature);
-router.patch("/update-nature/:natureId", recorderController.updateNature);
-router.delete("/delete-nature/:natureId", recorderController.deleteNature);
+router.post("/create-nature", authRec, recorderController.createNature);
+router.patch(
+  "/update-nature/:natureId",
+  authRec,
+  recorderController.updateNature
+);
+router.delete(
+  "/delete-nature/:natureId",
+  authRec,
+  recorderController.deleteNature
+);
 
-router.post("/create-location", recorderController.createLocation);
-router.patch("/update-location/:locationId", recorderController.updateLocation);
+router.post("/create-location", authRec, recorderController.createLocation);
+router.patch(
+  "/update-location/:locationId",
+  authRec,
+  recorderController.updateLocation
+);
 router.delete(
   "/delete-location/:locationId",
+  authRec,
   recorderController.deleteLocation
 );
 
 router.post(
   "/create-unregister/:subdistrictId",
+  authRec,
   recorderController.createUnregister
 );
 router.patch(
   "/update-unregistered/:unregisterId",
+  authRec,
   recorderController.updateUnregister
 );
 router.delete(
   "/delete-unregistered/:unregisterId",
+  authRec,
   recorderController.deleteUnregister
 );
 
 // Get Data
-router.get("/get/:data", recorderController.recorderGetAll);
+router.get("/get/:data", authRec, recorderController.recorderGetAll);
 router.get(
   "/get/table/:data/from/:find/:ref",
+  authRec,
   recorderController.recorderGetOne
 );
 

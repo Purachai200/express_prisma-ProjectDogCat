@@ -1,7 +1,7 @@
 const createError = require("../utils/createError");
 const userService = require("../services/user-service");
 
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 // Register =================================================
@@ -11,9 +11,8 @@ exports.register = async (req, res, next) => {
   // check ว่ามี email เดียวกันในระบบหรือยัง
   // hash password ด้วย bcryptjs
   // เก็บ hashed ลง db
+  const { first_name, last_name, username, password, email } = req.body;
   try {
-    const { first_name, last_name, username, password, email } = req.body;
-
     if (!first_name || !last_name || !email) {
       return createError(400, "Forget Some Data.");
     }
@@ -34,12 +33,12 @@ exports.register = async (req, res, next) => {
       return createError(400, "Username or password is invalid.");
     }
 
-    const isEmailExist = await userService.getUserByEmail("admin",email);
+    const isEmailExist = await userService.getUserByEmail("admin", email);
     if (isEmailExist) {
       return createError(400, "Email already exist.");
     }
 
-    const isUserExist = await userService.getUserByUsername("admin",username);
+    const isUserExist = await userService.getUserByUsername("admin", username);
     if (isUserExist) {
       return createError(400, "User already exist.");
     }
@@ -63,8 +62,8 @@ exports.register = async (req, res, next) => {
 
 // AdminLogin ====================================================
 exports.adminLogin = async (req, res, next) => {
+  const { username, password } = req.body;
   try {
-    const { username, password } = req.body;
     if (!username || !password) {
       return createError(400, "Username And Password Require.");
     }
@@ -77,7 +76,10 @@ exports.adminLogin = async (req, res, next) => {
       return createError(400, "Email or Password is invalid.");
     }
 
-    const isPasswordMatch = await bcrypt.compare(password, isUserExist.password);
+    const isPasswordMatch = await bcrypt.compare(
+      password,
+      isUserExist.password
+    );
 
     if (!isPasswordMatch) {
       return createError(400, "Email or Password is invalid.");
@@ -96,8 +98,8 @@ exports.adminLogin = async (req, res, next) => {
 
 // RecorderLogin ====================================================
 exports.recorderLogin = async (req, res, next) => {
+  const { username, password } = req.body;
   try {
-    const { username, password } = req.body;
     if (!username || !password) {
       return createError(400, "Username And Password Require.");
     }
@@ -105,11 +107,17 @@ exports.recorderLogin = async (req, res, next) => {
       return createError(400, "Email or Password is invalid.");
     }
 
-    const isUserExist = await userService.getUserByUsername("recorder", username);
+    const isUserExist = await userService.getUserByUsername(
+      "recorder",
+      username
+    );
     if (!isUserExist) {
       return createError(400, "Email or Password is invalid.");
     }
-    const isPasswordMatch = await bcrypt.compare(password, isUserExist.password);
+    const isPasswordMatch = await bcrypt.compare(
+      password,
+      isUserExist.password
+    );
 
     if (!isPasswordMatch) {
       return createError(400, "Email or Password is invalid.");
@@ -125,6 +133,18 @@ exports.recorderLogin = async (req, res, next) => {
   }
 };
 // Login ====================================================
+
+// getMe ====================================================
+
+exports.getAdmin = (req, res, next) => {
+  res.json(req.username);
+};
+
+exports.getRecorder = (req, res, next) => {
+  res.json(req.username[0]);
+};
+
+// getMe ====================================================
 
 exports.forgetPassword = (req, res, next) => {
   const { email } = req.body;
