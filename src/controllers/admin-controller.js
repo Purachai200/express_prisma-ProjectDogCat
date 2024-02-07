@@ -153,3 +153,13 @@ exports.adminGetDataOne = async (req, res, next) => {
   }
 };
 
+exports.adminGetDataOneString = async (req, res, next) => {
+  try {
+    const { data, find, ref } = req.params;
+    const result = await userService.getAdminOneData(data ,find ,ref ,String )
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+

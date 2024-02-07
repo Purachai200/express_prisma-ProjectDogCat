@@ -37,9 +37,14 @@ DELETE       /delete-recorder/:recorderId           1(admin)      recorderId    
 
 #Get
 GET          /get/:data                             1(admin)      :data = (DataTable)         none
+
 GET          /get/table/:data/from/:find/:ref       1(admin)      :data = (DataTable), 
                                                                   :find = (where? เช่น id), 
-                                                                  :ref = (1 หรือ หา id = 1)    none
+                                                                  :ref = (1 หรือ หา id = 1)    none  (Use For Find Number)
+
+GET          /get/string/table/:data/from/:find/:ref 1(admin)     :data = (DataTable), 
+                                                                  :find = (where? เช่น id), 
+                                                                  :ref = (1 หรือ หา id = 1)    none  (Use For Find String)
 
 - Recorder Route -
 method        path                                  auth          params                                 body

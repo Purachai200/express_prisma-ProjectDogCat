@@ -19,5 +19,6 @@ router.delete("/delete-recorder/:recorderId",authAdmin, adminController.deleteRe
 
 router.get("/get/:data",authAdmin, adminController.adminGetData);
 router.get("/get/table/:data/from/:find/:ref",authAdmin, adminController.adminGetDataOne);
+router.get("/get/string/table/:data/from/:find/:ref",authAdmin, adminController.adminGetDataOneString);
 
 module.exports = router;
