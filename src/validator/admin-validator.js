@@ -24,3 +24,11 @@ exports.createRecorderSchema = Joi.object({
   email: Joi.string(),
   subdistrictId: Joi.string().required().strip(),
 });
+
+exports.updateRecorderSchema = Joi.object({
+  first_name: Joi.string().required(),
+  last_name: Joi.string().required(),
+  username: Joi.string().required(),
+  password: Joi.string().required(),
+  email: Joi.string(),
+});

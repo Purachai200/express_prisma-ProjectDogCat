@@ -7,6 +7,7 @@ const {
   createSubdistrictSchema,
   createRecorderSchema,
   updateSubdistrictSchema,
+  updateRecorderSchema,
 } = require("../validator/admin-validator");
 
 exports.createSubDistrict = async (req, res, next) => {
@@ -91,6 +92,30 @@ exports.createRecorder = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.updateRecorder = async (req, res, next) => {
+  try {
+    const { recorderId } = req.params; 
+    const value = await updateRecorderSchema.validateAsync(req.body); 
+
+    const hashedPassword = await bcrypt.hash(value.password, 10);
+    value.password = hashedPassword
+
+    await prisma.recorder.update({
+      where: {
+        id: recorderId,
+      },
+      data: {
+        ...value,
+      },
+    });
+
+    res.json("Update Subdistrict Success");
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.deleteRecorder = async (req, res, next) => {
   try {
     const { recorderId } = req.params; 
@@ -121,7 +146,7 @@ exports.adminGetData = async (req, res, next) => {
 exports.adminGetDataOne = async (req, res, next) => {
   try {
     const { data, find, ref } = req.params;
-    const result = await userService.getAdminAllData(data ,find ,ref ,Number )
+    const result = await userService.getAdminOneData(data ,find ,ref ,Number )
     res.json(result);
   } catch (err) {
     next(err);

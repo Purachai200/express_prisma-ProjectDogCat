@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/create-address", authRec, recorderController.createHouseAddress);
 router.patch(
-  "/:addressId/update-address",
+  "/update-address/:addressId",
   authRec,
   recorderController.updateHouseAddress
 );
@@ -23,7 +23,7 @@ router.post(
   recorderController.createPetOwner
 );
 router.patch(
-  "/:petOwnerId/update-petOwner",
+  "/update-petOwner/:petOwnerId",
   authRec,
   recorderController.updatePetOwner
 );
@@ -34,7 +34,7 @@ router.delete(
 );
 
 router.post("/:petOwnerId/create-pet", authRec, recorderController.createPet);
-router.patch("/:petId/update-pet", authRec, recorderController.updatePet);
+router.patch("/update-pet/:petId", authRec, recorderController.updatePet);
 router.delete("/delete/:petId", authRec, recorderController.deletePet);
 
 router.post("/create-nature", authRec, recorderController.createNature);

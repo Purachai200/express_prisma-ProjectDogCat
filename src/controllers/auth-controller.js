@@ -68,12 +68,12 @@ exports.adminLogin = async (req, res, next) => {
       return createError(400, "Username And Password Require.");
     }
     if (typeof username !== "string" || typeof password !== "string") {
-      return createError(400, "Email or Password is invalid.");
+      return createError(400, "Username or Password is invalid.");
     }
 
     const isUserExist = await userService.getUserByUsername("admin", username);
     if (!isUserExist) {
-      return createError(400, "Email or Password is invalid.");
+      return createError(400, "Username or Password is invalid.");
     }
 
     const isPasswordMatch = await bcrypt.compare(
