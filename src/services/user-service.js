@@ -78,3 +78,11 @@ exports.getOneData = (dataTable, findFrom, refFind, typeRef) => {
     }
   })
 }
+
+exports.getByData = (dataTable, findFrom, refFind) => {
+  return prisma[dataTable].findMany({
+    where: {
+      [findFrom]: { in: [refFind] }
+    }
+  })
+}

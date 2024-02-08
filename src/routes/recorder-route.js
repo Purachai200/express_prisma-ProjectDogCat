@@ -84,5 +84,6 @@ router.get(
   authRec,
   recorderController.recorderGetOne
 );
+router.get("/getByData/table/:data/from/:find/", authRec, recorderController.recorderGetByUser)
 
 module.exports = router;

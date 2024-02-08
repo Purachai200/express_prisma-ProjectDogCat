@@ -422,3 +422,14 @@ exports.recorderGetOne = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.recorderGetByUser = async (req, res, next) => {
+  try {
+    const ref = req.username[0].subdistrictId;
+    const { data, find } = req.params;
+    const result = await userService.getByData(data, find, ref);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
