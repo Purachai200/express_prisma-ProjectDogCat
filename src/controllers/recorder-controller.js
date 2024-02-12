@@ -23,8 +23,7 @@ exports.createHouseAddress = async (req, res, next) => {
     if (typeof value !== "object") {
       return createError(400, "Something Went Wrong.");
     }
-    console.log(req.username[0].id);
-    await prisma.address.create({
+    const createdAddress = await prisma.address.create({
       data: {
         ...value,
         recorder: {
@@ -40,11 +39,12 @@ exports.createHouseAddress = async (req, res, next) => {
       },
     });
 
-    res.json("Create Address Success");
+    res.json(createdAddress);
   } catch (err) {
     next(err);
   }
 };
+
 exports.updateHouseAddress = async (req, res, next) => {
   try {
     const { addressId } = req.params;

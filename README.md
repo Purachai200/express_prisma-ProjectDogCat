@@ -83,3 +83,6 @@ GET          /get/:data                             1(recorder)       :data = (D
 GET          /get/table/:data/from/:find/:ref       1(recorder)       :data = (DataTable), 
                                                                       :find = (where? เช่น id), 
                                                                       :ref = (1 หรือ หา id = 1)    none
+GET          /getByData/table/:data/from/:find/       1(recorder)       :data = (DataTable), 
+                                                                        :find = (where? เช่น id), 
+                                                                        :ref = (1 หรือ หา id = 1)    req.user

@@ -18,7 +18,7 @@ router.delete(
 );
 
 router.post(
-  "/:addressId/create-pet-owner",
+  "/create-pet-owner/:addressId",
   authRec,
   recorderController.createPetOwner
 );
