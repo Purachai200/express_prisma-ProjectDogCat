@@ -59,7 +59,7 @@ PATCH         /update-petOwner/:petOwnerId       1(recorder)      petOwnerId    
 DELETE        /delete-petOwner/:petOwnerId       1(recorder)      petOwnerId                   none
 
 #Pet
-POST          /:petOwnerId/create-pet            1(recorder)      petOwnerId      {name, type, gender, color, defect, age, vaccined, vaccine_date, sterilized, location_id, nature_id}
+POST          /create-pet/:petOwnerId            1(recorder)      petOwnerId      {name, type, gender, color, defect, age, vaccined, vaccine_date, sterilized, location_id, nature_id}
 PATCH         /update-pet/:petId                 1(recorder)      petId           {name, type, gender, color, defect, age, vaccined, vaccine_date, sterilized, location_id, nature_id}
 DELETE        /delete/:petId                     1(recorder)      petId           none
 

@@ -33,7 +33,7 @@ router.delete(
   recorderController.deletePetOwner
 );
 
-router.post("/:petOwnerId/create-pet", authRec, recorderController.createPet);
+router.post("/create-pet/:petOwnerId", authRec, recorderController.createPet);
 router.patch("/update-pet/:petId", authRec, recorderController.updatePet);
 router.delete("/delete/:petId", authRec, recorderController.deletePet);
 
@@ -85,5 +85,6 @@ router.get(
   recorderController.recorderGetOne
 );
 router.get("/getByData/table/:data/from/:find/", authRec, recorderController.recorderGetByUser)
+router.get("/getMatch/table/:data/from/:find/:ref", authRec, recorderController.recorderGetAllMatch)
 
 module.exports = router;

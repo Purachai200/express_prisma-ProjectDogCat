@@ -79,6 +79,14 @@ exports.getOneData = (dataTable, findFrom, refFind, typeRef) => {
   })
 }
 
+exports.getAllMatch = (dataTable, findFrom, refFind, typeRef) => {
+  return prisma[dataTable].findMany({
+    where: {
+      [findFrom]: typeRef(refFind)
+    }
+  })
+}
+
 exports.getByData = (dataTable, findFrom, refFind) => {
   return prisma[dataTable].findMany({
     where: {

@@ -433,3 +433,13 @@ exports.recorderGetByUser = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.recorderGetAllMatch = async (req, res, next) => {
+  try {
+    const { data, find, ref } = req.params;
+    const result = await userService.getAllMatch(data, find, ref, Number);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+}
