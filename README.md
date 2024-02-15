@@ -5,7 +5,7 @@ Get Postman to test Query [DogAndCatQuery.postman_collection.json](https://githu
 PORT=
 
 DATABASE_URL=
-
+CLOUDINARY_SECRET=
 JWT_SECRET=
 JWT_EXPIRES_IN=
 
@@ -21,6 +21,8 @@ POST         /login/admin           0             none          {username, passw
 POST        /login/recorder         0             none          {username, password}
 GET         /get-admin              1(admin)      none          none
 GET         /get-recorder           1(recorder)   none          none
+GET         /getUnreg/:data         0             :data         none
+GET         /getPet/:data                         :data         none
 
 - Admin Route -
 method        path                                  auth          params                                 body

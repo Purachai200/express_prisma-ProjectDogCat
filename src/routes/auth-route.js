@@ -16,6 +16,7 @@ router.get("/get-recorder", authenticateRecorder,authController.getRecorder);
 // Get Data
 router.get("/getUnreg/:data", authController.getUnreg);
 router.get("/getPet/:data", authController.getPet);
+router.get("/getNews/:data", authController.getNews);
 
 
 router.post("/forget-password", authController.forgetPassword);

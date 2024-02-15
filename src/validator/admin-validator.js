@@ -32,3 +32,7 @@ exports.updateRecorderSchema = Joi.object({
   password: Joi.string().required(),
   email: Joi.string(),
 });
+
+exports.createNew = Joi.object({
+  title: Joi.string().required()
+})

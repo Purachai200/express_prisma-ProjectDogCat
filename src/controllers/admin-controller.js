@@ -8,7 +8,11 @@ const {
   createRecorderSchema,
   updateSubdistrictSchema,
   updateRecorderSchema,
+  createNew
 } = require("../validator/admin-validator");
+
+const cloudUpload = require("../utils/cloudUpload");
+const fs = require('fs');
 
 exports.createSubDistrict = async (req, res, next) => {
   try {
@@ -123,6 +127,80 @@ exports.deleteRecorder = async (req, res, next) => {
     await prisma.recorder.delete({
       where: {
         id: String(recorderId),
+      },
+    });
+
+    res.json("Delete Recorder Success");
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.createNews = async (req, res, next) => {
+  try {
+    const value = await createNew.validateAsync(req.body);
+    if (!req.file) {
+      return res.status(400).json({ message: "No image uploaded" });
+    }
+    
+    const imgUrl = await cloudUpload(req.file.path);
+
+    fs.unlink(req.file.path, (err) => {
+      if (err) {
+        console.error("Failed to delete file:", err);
+        return;
+      }
+    });
+  
+    const news = await prisma.new_Img.create({
+      data: {
+        url: imgUrl,
+        title: value.title
+      }
+    });
+    
+    res.json({ news });
+  } catch (err) {
+    next(err);
+  }  
+};
+
+exports.updateNews = async (req, res, next) => {
+  try {
+    const value = await createNew.validateAsync(req.body);
+    if (!req.file) {
+      return res.status(400).json({ message: "No image uploaded" });
+    }
+    
+    const imgUrl = await cloudUpload(req.file.path);
+
+    fs.unlink(req.file.path, (err) => {
+      if (err) {
+        console.error("Failed to delete file:", err);
+        return;
+      }
+    });
+  
+    const news = await prisma.new_Img.update({
+      data: {
+        url: imgUrl,
+        title: value.title
+      }
+    });
+    
+    res.json({ news });
+  } catch (err) {
+    next(err);
+  }  
+}
+
+exports.deleteNews = async (req, res, next) => {
+  try {
+    const { newId } = req.params; 
+
+    await prisma.new_Img.delete({
+      where: {
+        id: Number(newId),
       },
     });
 

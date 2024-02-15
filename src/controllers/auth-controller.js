@@ -183,6 +183,18 @@ exports.getPet = async (req, res, next) => {
 
 // getDog And Cat ====================================================
 
+// getNews ====================================================
+
+exports.getNews = async (req, res, next) => {
+  try {
+    const { data } = req.params;
+    const result = await userService.getAllData(data);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+}
+
 exports.forgetPassword = (req, res, next) => {
   const { email } = req.body;
   // get token -> สร้าง Link -> ส่ง email
