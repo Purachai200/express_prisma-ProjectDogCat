@@ -54,6 +54,8 @@ exports.updatePetSchema = Joi.object({
   vaccined: Joi.string().required(),
   vaccine_date: Joi.string(),
   sterilized: Joi.string().required(),
+  locationId: Joi.number(),
+  natureId: Joi.number(),
 })
 
 exports.createLocationSchema = Joi.object({

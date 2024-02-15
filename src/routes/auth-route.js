@@ -13,6 +13,10 @@ router.get("/get-admin", authenticateAdmin,authController.getAdmin);
 // Recorder get Data
 router.get("/get-recorder", authenticateRecorder,authController.getRecorder);
 
+// Get Data
+router.get("/getUnreg/:data", authController.getUnreg);
+router.get("/getPet/:data", authController.getPet);
+
 
 router.post("/forget-password", authController.forgetPassword);
 router.get("/forget-password/:token", authController.verfyForgetPassword);

@@ -146,6 +146,43 @@ exports.getRecorder = (req, res, next) => {
 
 // getMe ====================================================
 
+// getDog And Cat ====================================================
+
+exports.getUnreg = async (req, res, next) => {
+  try {
+    const { data } = req.params;
+    const result = await userService.getAllData(data);
+    
+    const postData = result.map(item => {
+      const { address_moo, name_info, ...postData } = item;
+      return postData;
+    });
+
+    res.json(postData);
+  } catch (err) {
+    next(err);
+  }
+}
+
+exports.getPet = async (req, res, next) => {
+  try {
+    const { data } = req.params;
+    const result = await userService.getAllData(data);
+    
+    const postData = result.map(item => {
+      const { locationId, petOwnerId, recorderId, color, defect, natureId, ...postData } = item;
+      return postData;
+    });
+
+    res.json(postData);
+  } catch (err) {
+    next(err);
+  }
+}
+
+
+// getDog And Cat ====================================================
+
 exports.forgetPassword = (req, res, next) => {
   const { email } = req.body;
   // get token -> สร้าง Link -> ส่ง email

@@ -35,7 +35,7 @@ router.delete(
 
 router.post("/create-pet/:petOwnerId", authRec, recorderController.createPet);
 router.patch("/update-pet/:petId", authRec, recorderController.updatePet);
-router.delete("/delete/:petId", authRec, recorderController.deletePet);
+router.delete("/delete-pet/:petId", authRec, recorderController.deletePet);
 
 router.post("/create-nature", authRec, recorderController.createNature);
 router.patch(
