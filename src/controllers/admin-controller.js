@@ -145,12 +145,18 @@ exports.createNews = async (req, res, next) => {
     
     const imgUrl = await cloudUpload(req.file.path);
 
-    fs.unlink(req.file.path, (err) => {
-      if (err) {
-        console.error("Failed to delete file:", err);
-        return;
-      }
-    });
+    if (fs.existsSync(req.file.path)) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) {
+          console.error("Failed to delete file:", err);
+          return;
+        }
+        console.log("File deleted successfully");
+      });
+    } else {
+      console.log("File does not exist");
+    }
+    
   
     const news = await prisma.new_Img.create({
       data: {
