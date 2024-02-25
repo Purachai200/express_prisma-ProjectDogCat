@@ -86,5 +86,6 @@ router.get(
 );
 router.get("/getByData/table/:data/from/:find/", authRec, recorderController.recorderGetByUser)
 router.get("/getMatch/table/:data/from/:find/:ref", authRec, recorderController.recorderGetAllMatch)
+router.get("/getMatchString/table/:data/from/:find/:ref", authRec, recorderController.recorderGetMatchString)
 
 module.exports = router;
