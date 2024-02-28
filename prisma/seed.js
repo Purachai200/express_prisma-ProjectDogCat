@@ -10,7 +10,20 @@ const adminData = [
 ]
 
 const subdistrictData = [
-  {name: 'อบต.กุดโดน', sub_district: 'ตำบลกุดโดน',district: 'ห้วยเม็ก',province: 'กาฬสินธุ์',zipcode: '46170'}
+  {
+    name: "องค์การบริหารส่วนตำบลหัวหิน",
+    sub_district: "หัวหิน",
+    district: "ห้วยเม็ก",
+    province: "กาฬสินธุ์",
+    zipcode: "46170"
+},
+{
+    name: "องค์การบริหารส่วนตำบลกุดโดน",
+    sub_district: "กุดโดน",
+    district: "ห้วยเม็ก",
+    province: "กาฬสินธุ์",
+    zipcode: "46170"
+}
 ]
 
 const locationData = [
@@ -26,17 +39,21 @@ const natureData = [
 
 const newsData = [
   {
-    title: "หัวข้อ1",
-    url: "https://res.cloudinary.com/dm6x9ox4t/image/upload/v1708613104/olnoekc6rih2qzqnmckb.png",
-},
-{
-    title: "หัวข้อ2",
-    url: "https://res.cloudinary.com/dm6x9ox4t/image/upload/v1708613175/o9ttodxgmqmauylz4qub.png",
-},
-{
-    title: "หัวข้อ3",
-    url: "https://res.cloudinary.com/dm6x9ox4t/image/upload/v1708613202/i9t6irdwr7rwdaksn5r9.png",
-}
+      title: "หัวข้อ1",
+      url: "https://res.cloudinary.com/dm6x9ox4t/image/upload/v1708613104/olnoekc6rih2qzqnmckb.png",
+  },
+  {
+      title: "หัวข้อ2",
+      url: "https://res.cloudinary.com/dm6x9ox4t/image/upload/v1708613175/o9ttodxgmqmauylz4qub.png",
+  },
+  {
+      title: "หัวข้อ3",
+      url: "https://res.cloudinary.com/dm6x9ox4t/image/upload/v1708613202/i9t6irdwr7rwdaksn5r9.png",
+  },
+  {
+      title: "จัดทำโดย",
+      url: "https://res.cloudinary.com/dm6x9ox4t/image/upload/v1708830194/f52owthntxfaheyh4y3v.png",
+  }
 ]
 
 const recorder_password = bcrypt.hashSync('recorder')
